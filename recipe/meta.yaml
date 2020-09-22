@@ -2,15 +2,15 @@
 {% set number = 1 %}
 
 package:
-  name: nvcc
-  version: 10.2
+  name: {{ name }}
+  version: {{ cudatoolkit | replace(".*", "") }}
 
 build:
-  number: 1
+  number: {{ number }}
 
 outputs:
   - name: nvcc
-    number: 1
+    number: {{ number }}
     script: install_nvcc.sh
     build:
       script_env:
