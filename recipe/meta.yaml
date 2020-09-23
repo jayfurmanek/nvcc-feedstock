@@ -9,7 +9,7 @@ build:
   number: {{ number }}
 
 outputs:
-  - name: nvcc
+  - name: {{ name }}_{{ target_platform }}
     number: {{ number }}
     script: install_nvcc.sh
     build:
