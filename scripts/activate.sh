@@ -13,6 +13,28 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if [[ -z "${CUDA_HOME}" ]]
+then
+  echo "CUDA_HOME is not set. Checking common places.."
+
+  if [[ -d "/usr/local/cuda" ]]
+  then
+     echo "/usr/local/cuda found."
+     export CUDA_HOME=/usr/local/cuda
+  elif [[ -d "/usr/local/cuda-10.2" ]]
+  then
+     echo "/usr/local/cuda-10.2 found."
+     export CUDA_HOME=/usr/local/cuda-10.2
+  else
+     echo "CUDA Toolkit not found."
+  fi
+fi
+
+if [[ ! -f "${CUDA_HOME}/bin/nvcc" ]]
+then
+    echo "NVCC not found. Please install the CUDA Toolkit locally and set the CUDA_HOME environment variable."
+fi
+
 if [[ ! -z "${CFLAGS+x}" ]]
 then
   export CFLAGS_CONDA_NVCC_BACKUP="${CFLAGS:-}"
