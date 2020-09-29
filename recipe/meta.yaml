@@ -1,0 +1,48 @@
+{% set name = "nvcc" %}
+{% set number = 1 %}
+
+package:
+  name: {{ name }}
+  version: {{ cudatoolkit | replace(".*", "") }}
+
+build:
+  number: {{ number }}
+
+outputs:
+  - name: {{ name }}_{{ target_platform }}
+    number: {{ number }}
+    script: install_nvcc.sh
+    build:
+      script_env:
+        - CUDA_HOME
+      ignore_run_exports:
+        - libgcc-ng
+      run_exports:
+        strong:
+          - cudatoolkit {{ cudatoolkit }}
+    requirements:
+      host:
+        # Needed to symlink libcuda into PREFIX libs.
+        - {{ compiler("c") }}
+      run:
+    test:
+      requires:
+        - {{ compiler("c") }}
+        # Host code is forwarded to a C++ compiler
+        - {{ compiler("cxx") }}
+      files:
+        - test.cu
+      commands:
+        - nvcc test.cu
+
+about:
+  home: https://github.com/conda-forge/nvcc-feedstock
+  license: BSD 3-Clause
+  license_family: BSD
+  license_file: LICENSE.txt
+  summary: A meta-package to enable the system nvcc
+  description: A meta-package to enable the system nvcc
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team
