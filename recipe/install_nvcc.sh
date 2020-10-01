@@ -42,3 +42,10 @@ fi
 # Stub is used to avoid getting driver code linked into binaries
 mkdir -p "$PREFIX/lib/stubs"
 ln -s "${CUDA_HOME}/lib64/stubs/libcuda.so" "$PREFIX/lib/stubs/libcuda.so.1"
+
+# These symlinks are needed in order for cmake to set the correct include
+# directories.
+mkdir -p "$PREFIX/include"
+ln -s "${CUDA_HOME}"/include/cuda_runtime.h "$PREFIX"/include/cuda_runtime.h
+ln -s "${CUDA_HOME}"/include/device_functions.h "$PREFIX"/include/device_functions.h
+ln -s "${CUDA_HOME}"/include/cuda.h "$PREFIX"/include/cuda.h

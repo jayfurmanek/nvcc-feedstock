@@ -33,7 +33,7 @@ outputs:
       files:
         - test.cu
       commands:
-        - nvcc test.cu
+        - nvcc -ccbin $GXX test.cu
 
 about:
   home: https://github.com/conda-forge/nvcc-feedstock
