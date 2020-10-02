@@ -25,13 +25,13 @@ cp "${RECIPE_DIR}"/../scripts/deactivate.sh "${PREFIX}"/etc/conda/deactivate.d/d
 mkdir -p "${PREFIX}/bin"
 cp "${RECIPE_DIR}"/../scripts/nvcc "${PREFIX}/bin"
 
-if [[ ! -f "${CUDA_HOME}/lib64/stubs/libcuda.so" ]]
+if [[ ! -f "${OPEN_CE_CUDA_HOME}/lib64/stubs/libcuda.so" ]]
 then
-    echo "File ${CUDA_HOME}/lib64/stubs/libcuda.so doesn't exist"
+    echo "File ${OPEN_CE_CUDA_HOME}/lib64/stubs/libcuda.so doesn't exist"
     return 1
 fi
 
-if ! grep -q "CUDA Version ${cudatoolkit%.*}" ${CUDA_HOME}/version.txt;
+if ! grep -q "CUDA Version ${cudatoolkit%.*}" ${OPEN_CE_CUDA_HOME}/version.txt;
 then
     echo "Version of installed CUDA didn't match package"
     return 1
@@ -41,11 +41,11 @@ fi
 # Needed for things that want to link to $(libcuda.so).
 # Stub is used to avoid getting driver code linked into binaries
 mkdir -p "$PREFIX/lib/stubs"
-ln -s "${CUDA_HOME}/lib64/stubs/libcuda.so" "$PREFIX/lib/stubs/libcuda.so.1"
+ln -s "${OPEN_CE_CUDA_HOME}/lib64/stubs/libcuda.so" "$PREFIX/lib/stubs/libcuda.so.1"
 
 # These symlinks are needed in order for cmake to set the correct include
 # directories.
 mkdir -p "$PREFIX/include"
-ln -s "${CUDA_HOME}"/include/cuda_runtime.h "$PREFIX"/include/cuda_runtime.h
-ln -s "${CUDA_HOME}"/include/device_functions.h "$PREFIX"/include/device_functions.h
-ln -s "${CUDA_HOME}"/include/cuda.h "$PREFIX"/include/cuda.h
+ln -s "${OPEN_CE_CUDA_HOME}"/include/cuda_runtime.h "$PREFIX"/include/cuda_runtime.h
+ln -s "${OPEN_CE_CUDA_HOME}"/include/device_functions.h "$PREFIX"/include/device_functions.h
+ln -s "${OPEN_CE_CUDA_HOME}"/include/cuda.h "$PREFIX"/include/cuda.h

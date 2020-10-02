@@ -13,4 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-"${CUDA_HOME}/bin/nvcc" $@
+"${OPEN_CE_CUDA_HOME}/bin/nvcc" $@
